@@ -1,0 +1,52 @@
+﻿@model MetricsSample.Models.Attempts
+
+<!-- ko with: home -->
+<div class="jumbotron">
+  <h1>Attempts Sample</h1>
+  <p class="lead">This is a sample application to show you the power of metrics</p>
+</div>
+
+<div class="row">
+  @using (Html.BeginForm("Checkout", "Metrics", FormMethod.Post, null))
+  {
+  <div class="col-md-4">
+    <h2>Checkout</h2>
+    <p>This section will show how many users are attempting to checkout</p>
+    <p data-bind="text: myHometown"></p>
+
+    <div class="form-group">
+      <label for="attempt">Attempts:</label>
+      @Html.TextBoxFor(m => m.CheckoutAttempt, new { @class = "form-control" })
+    </div>
+
+    <div class="form-group">
+      <label for="successful">Succesful:</label>
+      @Html.TextBoxFor(m => m.SuccessfulCheckout, new { @class = "form-control" })
+    </div>
+
+  </div>
+
+
+  <div class="col-md-4">
+    <h2>Payment</h2>
+    <p>This section will show how many users are attempting payment</p>
+    <p data-bind="text: myHometown"></p>
+
+    <div class="form-group">
+      <label for="attempt">Attempts:</label>
+      @Html.TextBoxFor(m => m.PaymentAttempt, new { @class = "form-control" })
+    </div>
+
+    <div class="form-group">
+      <label for="successful">Succesful:</label>
+      @Html.TextBoxFor(m => m.SuccessfulPayment, new { @class = "form-control" })
+    </div>
+    <p>
+      <button type="submit" class="btn btn-default">Submit</button>
+    </p>
+  </div>
+
+  }
+</div>
+
+<!-- /ko -->
