@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Web;
 using System.Web.Mvc;
 
@@ -25,23 +26,34 @@ namespace MetricsSample.Controllers
                 int i = 0;
                 while (i < sample.CheckoutAttempt)
                 {
-                    i = i + 100;
                     client.Send("attempts", i);
-                    if (sample.SuccessfulCheckout > 0)
+
+                    Random random = new Random();
+                    if ((sample.SuccessfulCheckout > i) && random.Next(1,15) >= 3)
                         client.Send("successful", i);
+
+                    i++;
+                    Thread.Sleep(250);
                 }
             }
 
-            //Thread.Sleep(10000);
-            //using (var client = new GraphiteTcpClient("54.78.163.146", 2003, "paymentservice"))
-            //{
-            //    for (int i = 0; i < 10; i++)
-            //    {
-            //        client.Send("attempts", 10 * i);
-            //        client.Send("successful", 8 * i);
-            //        Thread.Sleep(2000);
-            //    }
-            //}
+
+
+            using (var client = new GraphiteTcpClient("54.78.137.100", 2003, "checkoutservice"))
+            {
+                int i = 0;
+                while (i < sample.PaymentAttempt)
+                {
+                    client.Send("attempts", i);
+
+                    Random random = new Random();
+                    if ((sample.SuccessfulPayment > i) && random.Next(1, 15) >= 3)
+                        client.Send("successful", i);
+
+                    i++;
+                    Thread.Sleep(250);
+                }
+            }
 
             return View("Index");
         }
